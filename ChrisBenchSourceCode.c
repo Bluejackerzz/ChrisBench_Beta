@@ -1,14 +1,131 @@
 #include <stdio.h>
 #include <time.h> 
 #include <stdlib.h>
+#include <string.h>
 #include <conio.h>
 #include <unistd.h>
 #include <windows.h>
 #include <tchar.h>
+#include <errno.h>
+#include <stdbool.h>
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <unistd.h> 
+#include <limits.h>
+#endif
 
 struct flooding{
     double a[1024];
 }*temp;
+
+void changeLog(){
+    system("cls");
+    printAnimation("\n    ChangeLog   \n");
+    printf("V1.7.1\n");
+    printf("- Change logic code for the deletion of older bench file\n");
+    printf("- Fixing minor logic/code issue\n\n");
+
+    printf("v1.7\n");
+    printf("- Adding option to delete older Version\n");
+    printf("- Fixing Minor Issues\n");
+    printf("- i still finding the solution to resolve the filesize read bug\n\n");
+
+    printf("v1.6.9\n");
+    printf("- Adding option to proceed whenever user try to benchmark.\n");
+    printf("- Fixing minor issue, with the benchmark\n\n");
+
+    printf("v1.6.8.1\n");
+    printf("- fix delete bug, user experience bug whenever they try to delete file\n");
+    printf("- change Number Test logic, so it takes longer to load.\n");
+    printf("- User now can try memory test.\n");
+    printf("- Theres still a filesize and delete bug, whenever user done testing with the, file read test\n");
+
+    printf("press Enter to continue...");
+    while (getchar() != '\n');
+    getch();
+    return mainClone();
+}
+
+void deleteOldVersion(){
+    // const char *old_exe_filename_1 = "ChrisBenchV1.5.1.exe";
+    // const char *old_exe_filename_2 = "ChrisBenchV1.6.0[BUGGED].exe";
+    // const char *old_exe_filename_3 = "ChrisBenchV1.6.8.1.exe";
+    // const char *old_exe_filename_4 = "ChrisBenchV1.6.8(RILFIX).exe";
+   const char *filenames[] = {
+        "ChrisBenchV1.5.1.exe",
+        "ChrisBenchV1.6.0[BUGGED].exe",
+        "ChrisBenchV1.6.8.1.exe",
+        "ChrisBenchV1.6.8(RILFIX).exe",
+        "ChrisBenchV1.7.exe"
+    };
+    const int num_files = sizeof(filenames) / sizeof(filenames[0]);
+    FILE *file_pointers[num_files];
+    char pilih;
+        system("cls");
+        printf("Welcome to Chris BenchMark.\n");
+        printf("\nDo you want to delete old Benchmark Version? (Y/N) : ");
+        while (getchar() != '\n');
+        scanf("%c", &pilih);       
+
+    for (int i = 0; i < num_files; i++) {
+        file_pointers[i] = fopen(filenames[i], "r");
+        if (file_pointers[i] == NULL) {
+            system("cls");
+            printf("Welcome to Chris BenchMark.\n");
+            Sleep(700);
+            printf("\nFile Read Error!\n");
+            Sleep(700);
+            printf("Theres No older version of this BenchMark\n");
+            Sleep(700);
+            return mainClone();     
+        }
+    }
+    
+   for (int i = 0; i < num_files; i++) {
+        if (file_pointers[i] != NULL) {
+            fclose(file_pointers[i]);
+        }
+    }
+
+    if (pilih == 'Y' || pilih == 'y') {
+        system("cls");
+        Sleep(700);
+        int result = remove("ChrisBenchV1.5.1.exe");
+        int result1 = remove("ChrisBenchV1.6.0[BUGGED].exe");
+        int result2 = remove("ChrisBenchV1.6.8.1.exe");
+        int result3 = remove("ChrisBenchV1.6.8(RILFIX).exe");
+        printf("Removing old BenchMark. \n");
+        Sleep(700);
+        if(result == 0) {
+            Sleep(700);
+            printf("File has been Deleted.\n");
+            return mainClone();
+        } 
+        else{
+            Sleep(700);
+            perror("Error Deleting File");
+        }
+            Sleep(700);
+        return mainClone();
+
+   }else if (pilih == 'N' || pilih == 'n') {
+        system("cls");
+        Sleep(700);
+        printf("older version Will not be Deleted.\n");
+        Sleep(700);
+        return mainClone();
+
+   } else {
+       system("cls");
+       printf("Invalid Input, back to menu\n");
+       Sleep(700);
+       printf("Press Enter to continue..");
+       Sleep(700);
+       getch();
+       return mainClone();
+   }
+}
 
 void freeMemory(struct flooding* temp) {
     free(temp);
@@ -33,24 +150,6 @@ long get_file_size(const char *filename) {
     return file_size_bytes;
 }
 
-void changeLog(){
-    system("cls");
-    printAnimation("\n    ChangeLog   \n");
-    printf("v1.6.9\n");
-    printf("- Adding option to Yes or no whenever user try to benchmark.\n");
-    printf("- Fixing minor issue, with the benchmark\n\n");
-
-    printf("v1.6.8.1\n");
-    printf("- fix delete bug, user experience bug whenever they try to delete file\n");
-    printf("- change Number Test logic, so it takes longer to load.\n");
-    printf("- User now can try memory test.\n");
-    printf("- Theres still a filesize and delete bug, whenever user done testing with the, file read test\n");
-
-    printf("press Enter to continue...");
-    while (getchar() != '\n');
-    getch();
-    return mainClone();
-}
 
 void memTest(){
     int second;
@@ -381,11 +480,10 @@ void deleteBench(){
        Sleep(700);
        if (result == 0) {
         Sleep(700);
-        printf("File deleted has been Deleted.\n");
+        printf("File has been Deleted.\n");
         } else {
         Sleep(700);
         perror("Error Deleting File");
-    
         }
         Sleep(700);
        return mainClone();
@@ -411,10 +509,10 @@ void startScreen(){
     printAnimation("Welcome to Chris BenchMark...");
     Sleep(700);
     system("cls");
-    printAnimation("Version 1.6.9");
+    printAnimation("Version 1.7");
     Sleep(700);
     system("cls");
-    printAnimation("Created By ChristianJodiW.");
+    printAnimation("Created By ChristianJodiW. in C Language");
     Sleep(700);
     printAnimation("Beberapa Bug Mungkin masih akan muncul ^^\n\n");
     Sleep(700);
@@ -431,8 +529,9 @@ system("cls");
     printf("2. File read Test\n");
     printf("3. Memory Test\n\n");
     printf("4. Delete Bench File\n");
-    printf("5. Exit Program\n\n");
-    printf("\n Press '0' to see changelog");
+    printf("5. Delete Chris BenchMark Previous version\n");
+    printf("6. Exit Program\n\n");
+    printf("\n Press '0' to see changelog\n");
     printf("\nenter your benchmark Choices : ");
     scanf("%d",&choice);
 
@@ -453,6 +552,9 @@ system("cls");
         deleteBench();
         break;
         case 5:
+        deleteOldVersion();
+        break;
+        case 6:
         system("cls");
         printAnimation("Thx For Using this Program ^^");
         Sleep(500);
@@ -481,8 +583,9 @@ int main(){
     printf("2. File read Test\n");
     printf("3. Memory Test\n\n");
     printf("4. Delete Bench File\n");
-    printf("5. Exit Program\n\n");
-    printf("\n Press '0' to see changelog");
+    printf("5. Delete Chris BenchMark. Previous version\n");
+    printf("6. Exit Program\n\n");
+    printf("\n Press '0' to see changelog\n");
     printf("\nenter your benchmark Choices : ");
     scanf("%d",&choice);
 
@@ -503,6 +606,9 @@ int main(){
         deleteBench();
         break;
         case 5:
+        deleteOldVersion();
+        break; 
+        case 6:
         system("cls");
         printAnimation("Thx For Using this Program ^^");
         Sleep(500);
