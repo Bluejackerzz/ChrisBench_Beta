@@ -118,12 +118,10 @@ void deleteOldVersion(){
 
    } else {
        system("cls");
-       printf("Invalid Input, back to menu\n");
        Sleep(700);
-       printf("Press Enter to continue..");
+       printf("Invalid Input\n");
        Sleep(700);
-       getch();
-       return mainClone();
+       return deleteOldVersion();
    }
 }
 
@@ -149,7 +147,6 @@ long get_file_size(const char *filename) {
 
     return file_size_bytes;
 }
-
 
 void memTest(){
     int second;
@@ -221,12 +218,19 @@ void memTest(){
         }
     }
 
-    if (pilih == 'N' || pilih == 'n') {
+    else if(pilih == 'N' || pilih == 'n') {
        system("cls");
        Sleep(700);
        printAnimation("PUSSY!");
        Sleep(700);
        return mainClone();
+    }
+    else{
+       system("cls");
+       Sleep(700);
+       printf("Invalid input\n");
+       Sleep(700);
+       return memTest();
     }
 }
 
@@ -264,11 +268,9 @@ void numberTest(){
                     printf("Welcome To Chris BenchMark\n\n");
 			        printf("[");
 			        char loading[50] = "";
-
 			    for(int j = 0 ; j < proccessed; j++) {
 				    strcat(loading, "|");
-			        }
-
+                }
 			        printf("%20s", loading);
 			        printf("]\n");
                     printf("This might take a while...");
@@ -291,12 +293,19 @@ void numberTest(){
 
         return mainClone();
     }  
-    if (pilih == 'N' || pilih == 'n') {
+    else if(pilih == 'N' || pilih == 'n') {
        system("cls");
        Sleep(500);
        printf("Back to menu..");
        Sleep(500);
        return mainClone();
+    }
+    else{
+       system("cls");
+       Sleep(700);
+       printf("Invalid input\n");
+       Sleep(700);
+       return numberTest();
     }
 
 }
@@ -332,7 +341,9 @@ void fileRead(){
         scanf("%d",&level);
 
         system("cls");
+        Sleep(500);
         printf("Testing now... ");
+        Sleep(500);
 
         clock_t start = clock(); 
 
@@ -383,8 +394,8 @@ void fileRead(){
 
         char pilih;
         printf("Delete Benchmark File? (Y/N) : ");
-        fclose(fptr);
         while (getchar() != '\n');
+        fclose(fptr);
         scanf("%c", &pilih);       
 
     if (pilih == 'Y' || pilih == 'y') {
@@ -404,7 +415,7 @@ void fileRead(){
             Sleep(700);
         return mainClone();
 
-   }else if (pilih == 'N' || pilih == 'n') {
+   }else if(pilih == 'N' || pilih == 'n') {
         system("cls");
         Sleep(700);
         printf("File Will not be Deleted.\n");
@@ -415,20 +426,25 @@ void fileRead(){
 
    } else {
        system("cls");
-       printf("Invalid Input, back to menu\n");
        Sleep(700);
-       printf("Press Enter to continue..");
+       printAnimation("Invalid Input\n");
        Sleep(700);
-       getch();
        return mainClone();
    }
  }
- if (pilih == 'N' || pilih == 'n') {
+    else if(pilih == 'N' || pilih == 'n') {
        system("cls");
        Sleep(500);
        printf("Back to menu..");
        Sleep(500);
        return mainClone();
+    }
+    else{
+       system("cls");
+       Sleep(700);
+       printf("Invalid input\n");
+       Sleep(700);
+       return fileRead();
     }
 }
 
@@ -468,8 +484,8 @@ void deleteBench(){
     printf("File size: %ld MB\n", file_size_mb);
     char pilih;
     printf("Delete Benchmark File? (Y/N) : ");
-    fclose(fptr);
     while (getchar() != '\n');
+    fclose(fptr);
     scanf("%c", &pilih);       
 
    if (pilih == 'Y' || pilih == 'y') {
@@ -497,22 +513,20 @@ void deleteBench(){
        return mainClone();
    } else {
        system("cls");
-       printf("Invalid Input, back to menu\n");
        Sleep(700);
-       printf("Press Enter to continue..");
+       printf("Invalid Input\n");
        Sleep(700);
-       getch();
-       return mainClone();
+       return deleteBench();
    }
 }
 void startScreen(){
     printAnimation("Welcome to Chris BenchMark...");
     Sleep(700);
     system("cls");
-    printAnimation("Version 1.7");
-    Sleep(700);
+    printAnimation("Version 1.7.1");
+    Sleep(700);`
     system("cls");
-    printAnimation("Created By ChristianJodiW. in C Language");
+    printAnimation("Created By ChristianJodiW. written in C Language\n");
     Sleep(700);
     printAnimation("Beberapa Bug Mungkin masih akan muncul ^^\n\n");
     Sleep(700);
@@ -521,7 +535,7 @@ void startScreen(){
 }
 
 void mainClone(){
-system("cls");
+
 system("cls");
     int choice;
     printf("Welcome To Chris BenchMark.\n");
@@ -563,11 +577,9 @@ system("cls");
         exit(0);
         default:
         system("cls");
+        Sleep(500);
         printf("\nInput tidak valid...\n");
         Sleep(500);
-        printf("Press Enter to Continue...\n");
-        getch();
-        system("cls");
         return mainClone();
     } 
 
@@ -600,13 +612,13 @@ int main(){
             fileRead();
         break;
         case 3:
-        memTest();
+            memTest();
         break;
         case 4:
-        deleteBench();
+            deleteBench();
         break;
         case 5:
-        deleteOldVersion();
+            deleteOldVersion();
         break; 
         case 6:
         system("cls");
@@ -617,12 +629,9 @@ int main(){
         exit(0);
         default:
         system("cls");
+        Sleep(500);
         printf("\nInput tidak valid...\n");
         Sleep(500);
-        printf("Press Enter to Continue...\n");
-        while (getchar() != '\n');
-        getch();
-        system("cls");
         return main();
     } 
 }
