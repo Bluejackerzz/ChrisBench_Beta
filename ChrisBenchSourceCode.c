@@ -531,7 +531,7 @@ void startScreen(){
     system("cls");
     printAnimation("Version 1.7.1");
     Sleep(700);
-    system("cls");
+    system("cls"); 
     printAnimation("Created By ChristianJodiW. written in C Language\n");
     Sleep(700);
     printAnimation("Beberapa Bug Mungkin masih akan muncul ^^\n\n");
