@@ -126,8 +126,12 @@ void deleteOldVersion(){
 }
 
 void freeMemory(struct flooding* temp) {
-    free(temp);
+    if (temp != NULL) {
+        free(temp);
+        temp = NULL; 
+    }
 }
+
 
 long get_file_size(const char *filename) {
     FILE *fptr = fopen(filename, "r");
@@ -186,6 +190,9 @@ void memTest(){
                 if (temp == NULL){
                 time_t end_time = time(NULL);
                 double time_elapsed_seconds = difftime(end_time, start_time); 
+                while (time(NULL) < end_time) {
+                    temp = malloc(sizeof(struct flooding));
+                }
                 system("cls");
                 printf("\nTime Elapsed: %lf\n", time_elapsed_seconds);
                 printf("Memory Full\n");
@@ -202,6 +209,10 @@ void memTest(){
                 if (elapsed_seconds >= second){ 
                 time_t end_time = time(NULL);
                 double time_elapsed_seconds = difftime(end_time, start_time);
+                
+                while (time(NULL) < end_time) {
+                    temp = malloc(sizeof(struct flooding));
+                }
                 system("cls");
                 Sleep(700);
                 printf("\nTime Elapsed: %lf \n", time_elapsed_seconds);
@@ -386,7 +397,7 @@ void fileRead(){
 
         double file_size_mb = file_size_bytes / (1024.0 * 1024.0);
 
-        printf("File size: %.2f MB\n", file_size_mb); 
+        printf("File size: %f MB\n", file_size_mb); 
 
         char pilih;
         printf("Delete Benchmark File? (Y/N) : ");
@@ -469,6 +480,7 @@ void deleteBench(){
         return mainClone();
     }
 
+    fclose(fptr);
     long file_size_bytes = get_file_size("ChrisBenchTestFile.txt");
     if (file_size_bytes == -1L) {
         printf("Error getting file size!\n");
